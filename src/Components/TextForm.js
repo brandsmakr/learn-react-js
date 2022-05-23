@@ -12,6 +12,10 @@ export default function TextForm(props) {
     // setText("You have Click on  handleUpClick");
     let newText = text.toUpperCase();
     setText(newText);
+    props.btnAlert("success ", "The text has been converted to uperCase");
+    setTimeout(() => {
+      props.setAlert(null);
+    }, 1500);
   };
   const handleCaptializeClick = () => {
     console.log("You calicked handleCaptilizeClick" + text);
@@ -26,6 +30,10 @@ export default function TextForm(props) {
     // setText("You have Click on  handleUpClick");
     let newText = text.toLowerCase();
     setText(newText);
+    props.btnAlert("success ", "The text has been converted to lowerCase");
+    setTimeout(() => {
+      props.setAlert(null);
+    }, 1500);
   };
   const handleOnChange = (event) => {
     console.log("on change");
@@ -40,41 +48,72 @@ export default function TextForm(props) {
     text.select();
     // text.setSelectionRange(0, 999);
     navigator.clipboard.writeText(text.value);
+    props.btnAlert("success ", " The text has been copied");
+    setTimeout(() => {
+      props.setAlert(null);
+    }, 1500);
   };
 
   // handle extra spaces
   const handleExtraSpaces = () => {
     let newText = text.split(/[ ]+/);
     setText(newText.join(" "));
+    props.btnAlert("success ", "The extra spaves has been removed from text");
+    setTimeout(() => {
+      props.setAlert(null);
+    }, 1500);
   };
 
   // use state for font size
   const [size, setSize] = useState(30);
 
-  const fontStyle = {
-    fontSize: `${size}px`
-  }
+  const myBoxStyle = {
+    fontSize: `${size}px`,
+    backgroundColor: `${props.mode === "light" ? "CadetBlue" : "floralwhite"}`,
+    color: `${props.mode === "light" ? "white" : ""}`,
+  };
 
-  const setNormalFont = ()=>{
+  const textColor = {
+    color: `${props.mode === "light" ? "white" : ""}`,
+  };
+
+  const setNormalFont = () => {
     console.log("set normal font");
     setSize(30);
-  }
+    props.btnAlert("success ", "The font size has been set to normal fontSize");
+    setTimeout(() => {
+      props.setAlert(null);
+    }, 1500);
+  };
 
   // increase and dcrease font size
-  const increaseFontSize = ()=>{
+  const increaseFontSize = () => {
     console.log("increase Font size");
-    setSize(size+1);
-  }
-  const decreaseFontSize = ()=>{
+    setSize(size + 1);
+    props.btnAlert(
+      "success ",
+      "The font size has been increase to normal fontSize"
+    );
+    setTimeout(() => {
+      props.setAlert(null);
+    }, 1500);
+  };
+  const decreaseFontSize = () => {
     console.log("decurease font size");
-    setSize(size-1);
-  }
-  
+    setSize(size - 1);
+    props.btnAlert(
+      "success ",
+      "The font size has been decrease to normal fontSize"
+    );
+    setTimeout(() => {
+      props.setAlert(null);
+    }, 1500);
+  };
 
   return (
     <>
       <div className="container">
-        <h1>{props.heading}</h1>
+        <h1 style={textColor}>{props.heading}</h1>
         <div className="mb-3">
           <textarea
             className="form-control cap"
@@ -82,7 +121,8 @@ export default function TextForm(props) {
             value={text}
             rows="8"
             onChange={handleOnChange}
-            style={fontStyle}
+            style={myBoxStyle}
+            // style={`{backgroundColor: props.mode==='light'?'CadetBlue':'floralwhite', color: props.mode==='light'?'white':'' }` }
           ></textarea>
         </div>
         <button className="btn btn-primary mx-2" onClick={handleUpClick}>
@@ -103,27 +143,63 @@ export default function TextForm(props) {
         <button className="btn btn-primary mx-2" onClick={handleExtraSpaces}>
           Remove Extra spaces
         </button>
-        <div class="btn-group" role="group" aria-label="Basic example">
-          <button type="button" class="btn btn-dark" onClick={increaseFontSize} >
+        <div className="btn-group" role="group" aria-label="Basic example">
+          <button
+            type="button"
+            className="btn btn-dark"
+            onClick={increaseFontSize}
+          >
             +
           </button>
-          <button type="button" class="btn btn-secondary" onClick={setNormalFont} >
+          <button
+            type="button"
+            className="btn btn-secondary"
+            onClick={setNormalFont}
+          >
             Set Normal Font
           </button>
-          <button type="button" class="btn btn-dark" onClick={decreaseFontSize}>
+          <button
+            type="button"
+            className="btn btn-dark"
+            onClick={decreaseFontSize}
+          >
             -
           </button>
         </div>
       </div>
-      <div className="container my-3">
-        <h1>Your text summary</h1>
-        <p>
-          {text.split(" ").length} words and {text.length} chracters
-        </p>
-        <p>{0.008 * text.split(" ").length} Minutes to Read</p>
-        <h2>Preview</h2>
-        <p className="cap">{text}</p>
+      <div className="container my-5 py-5 d-flex" style={textColor}>
+        <div className="w-75">
+          <h2>Preview</h2>
+          <p className="cap">
+            {text.length > 0 ? text : "Enter something to preview it here"}
+          </p>
+        </div>
+        <div className="w-25 text-center">
+          <h2>Your text summary</h2>
+          <p>
+            {wordCount(text)}
+            {/* {text.split(" ").length}*/} words and {text.length} chracters
+          </p>
+          <p>{0.008 * text.split(" ").length} Minutes to Read</p>
+        </div>
       </div>
     </>
   );
+
+  function wordCount(content) {
+    if (content === "") {
+      return 0;
+    } 
+      let arr = content.split(" ");
+      let len = arr.length;
+      let count = 0;
+
+      for (let i = 0; i < len; i++) {
+        if (arr[i] === "" || arr[i] === " ") {
+          count++;
+        }
+      }
+      return len - count;
+    
+  }
 }
