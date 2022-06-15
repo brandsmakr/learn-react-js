@@ -44,10 +44,12 @@ export default function TextForm(props) {
   // copy the text
   const handleCopy = () => {
     console.log("copy the text");
-    var copy = document.getAnimations("mybox");
-    text.select();
+    // var copy = document.getAnimations("mybox");
+    // text.select();
     // text.setSelectionRange(0, 999);
-    navigator.clipboard.writeText(text.value);
+    // navigator.clipboard.writeText(text.value);
+    // other simple method
+    navigator.clipboard.writeText(text);
     props.btnAlert("success ", " The text has been copied");
     setTimeout(() => {
       props.setAlert(null);
@@ -177,11 +179,24 @@ export default function TextForm(props) {
         </div>
         <div className="w-25 text-center">
           <h2>Your text summary</h2>
+          
+          {/* <p> */}
+            {/* {wordCount(text)} */}
+            {/* {text.split(" ").length} words and {text.length} chracters */}
+          {/* </p> */}
+          {/* 
+            Another method to count words and chracters
+          */}
+          {/* <p>
+            {text.split(" ").filter((element)=>{return element.length !== 0}).length} words and {text.length} chracters
+          </p> */}
+          {/* 
+            Third method to count words and chracters  using regular expression    
+          */}
           <p>
-            {wordCount(text)}
-            {/* {text.split(" ").length}*/} words and {text.length} chracters
+            {text.split(/\s+/).filter((element)=>{ return element.length !== 0}).length} words and {text.length} chracters
           </p>
-          <p>{0.008 * text.split(" ").filter((element)=>{return element.length !== 0}).length} Minutes to Read</p>
+          <p>{0.008 * text.length} Minutes to Read</p>
         </div>
       </div>
     </>
