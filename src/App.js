@@ -7,6 +7,7 @@ import { useState } from "react";
 import Alert from "./Components/Alert";
 import React from "react";
 import { BrowserRouter as Router, Routes as Switch, Route } from "react-router-dom";
+import Parent from "./Components/Parent";
 
 function App() {
   const [alert, setAlert] = useState(null);
@@ -24,7 +25,7 @@ function App() {
 
   const [text, setText] = useState("light");
 
-  const toggleMode = () => {
+  const toggleMode = (cls) => {
     if (mode === "light") {
       setMode("dark");
       setText("light");
@@ -68,7 +69,8 @@ function App() {
                   btnAlert={showAlert}
                 />
               }
-            />
+              />
+              <Route exact path='/pass-data-from-child-to-parent' element={<Parent />} />
             <Route exact  path="/about" element={<About />} />
           </Switch>
         </div>

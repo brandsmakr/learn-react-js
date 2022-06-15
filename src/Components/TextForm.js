@@ -125,25 +125,23 @@ export default function TextForm(props) {
             // style={`{backgroundColor: props.mode==='light'?'CadetBlue':'floralwhite', color: props.mode==='light'?'white':'' }` }
           ></textarea>
         </div>
-        <button className="btn btn-primary mx-2" onClick={handleUpClick}>
+        <button className="btn btn-primary mx-2 my-2" onClick={handleUpClick}>
           Convert to UpperCase
         </button>
         <button
-          className="btn btn-primary mx-2"
+          className="btn btn-primary mx-2 my-2"
           onClick={handleCaptializeClick}
         >
           Convert to CaptilizeClick
         </button>
-        <button className="btn btn-primary mx-2" onClick={handleLowClick}>
+        <button className="btn btn-primary mx-2 my-2" onClick={handleLowClick}>
           Convert to LowerCase
         </button>
-        <button className="btn btn-primary mx-2" onClick={handleCopy}>
-          Copy Text
-        </button>
-        <button className="btn btn-primary mx-2" onClick={handleExtraSpaces}>
+       
+        <button className="btn btn-primary mx-2 my-2" onClick={handleExtraSpaces}>
           Remove Extra spaces
         </button>
-        <div className="btn-group" role="group" aria-label="Basic example">
+        <div className="btn-group  my-2 mx-2" role="group" aria-label="Basic example">
           <button
             type="button"
             className="btn btn-dark"
@@ -166,6 +164,9 @@ export default function TextForm(props) {
             -
           </button>
         </div>
+        <button className="btn btn-primary mx-2 my-2" onClick={handleCopy}>
+          Copy Text
+        </button>
       </div>
       <div className="container my-5 py-5 d-flex" style={textColor}>
         <div className="w-75">
@@ -180,7 +181,7 @@ export default function TextForm(props) {
             {wordCount(text)}
             {/* {text.split(" ").length}*/} words and {text.length} chracters
           </p>
-          <p>{0.008 * text.split(" ").length} Minutes to Read</p>
+          <p>{0.008 * text.split(" ").filter((element)=>{return element.length !== 0}).length} Minutes to Read</p>
         </div>
       </div>
     </>
